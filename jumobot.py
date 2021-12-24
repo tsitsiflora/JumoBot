@@ -1,17 +1,13 @@
 import os
 import requests
 import time
-from pathlib import Path
-from dotenv import load_dotenv
-import json
-from jumobot_config import BOT_NAME, SLACK_BOT_TOKEN, WEATHER_API_TOKEN 
+from jumo_config import SLACK_BOT_TOKEN, WEATHER_API_TOKEN, BOT_NAME
+import json 
 from slackclient import SlackClient
 
-env_path = Path('.')/'env'
-load_dotenv(dotenv_path=env_path)
 
 # instantiating the slack client
-slack_client = SlackClient(token=os.environ['SLACK_BOT-TOKEN'])
+slack_client = SlackClient(SLACK_BOT_TOKEN)
 # we also need the user ID: 
 jumobot_id = None
 
