@@ -38,31 +38,34 @@ def weather_request():
     requested city.'''
 
     data = request.form
+    #print(data)
+    channel = data.get('channel_id')
     city = data.get('text')
-    print(city)
+    #print(city)
     
     api_key = WEATHER_API_TOKEN
     route = f'://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
     api_request = requests.get('https' + route)
     data = json.loads(api_request.text)
-    weather_response = f'It feels like {data} degrees'
-    print(weather_response)
+    temp = data['main']['temp']
+    feels_like = data['main']['feels_like']
+    name = data['name']
+    weather_response = f'The temperature is {temp} and it feels like {feels_like} degrees in {name}.'
+    #print(weather_response)
 
-    return weather_response, 200
-    
-'''
-def bot_response(weather_response): 
-    Takes the response from the get_weather function and posts it in the channel
+    '''Takes the response from the weather and posts it in the channel'''
 
     #default response for when the weather API does not understand the request
     default_response = 'City not found, please try again.'
 
     #sending the response back to the channel
-    slack_client.chat_postMessage(text=weather_response or default_response)
-'''
+    slack_client.chat_postMessage(channel=channel, text=weather_response or default_response)
+     
+    return Response(), 200
 
 if __name__=="__main__":
     app.run(debug=True, port=8000)
 
 
-
+# todo: get temperature in degrees celcius
+# fix the issue with ngrok
