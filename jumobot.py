@@ -44,7 +44,7 @@ def weather_request():
     #print(city)
     
     api_key = WEATHER_API_TOKEN
-    route = f'://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
+    route = f'://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={api_key}'
     api_request = requests.get('https' + route)
     data = json.loads(api_request.text)
     temp = data['main']['temp']
