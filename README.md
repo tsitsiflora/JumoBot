@@ -1,5 +1,5 @@
 # JumoBot
-A slack bot for weather updates
+A Slack bot for weather updates
 
 
 # Running the application locally
@@ -9,7 +9,7 @@ A slack bot for weather updates
 ### Ngrok
 
 1. Download ngrok and register for a free account here: https://ngrok.com/
-2. Run your application and obtain the forwarding url
+2. Run your application and obtain the forwarding url.
 
 ### A slack application: 
 
