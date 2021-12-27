@@ -18,9 +18,10 @@ slack_event_adapter = SlackEventAdapter(SIGNING_SECRET,'/slack/events', app)
 BOT_ID = slack_client.api_call("auth.test")['user_id']
 RTM_READ_DELAY = 1
 
+
 @slack_event_adapter.on('message')
 def message(payload):
-    event = payload.get('event', {})
+    event = payload.get('event')
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
@@ -28,14 +29,15 @@ def message(payload):
     if BOT_ID != user_id:
         slack_client.chat_postMessage(channel=channel_id, text="That sounds awesome!")
 
+
 def get_data():
     '''
     Helper method for getting the data sent by Slack to our webhook
     '''
-    
     data = request.form
 
     return (data.get('channel_id'), data.get('text'))    
+
 
 @app.route('/jumo_weather', methods=['POST'])
 def weather_request():
@@ -74,17 +76,11 @@ def weather_request():
         print(str(e))
         response = 'Something went wrong, please try again.'
 
-
-    '''Takes the response from the weather and posts it in the channel'''
-
     #sending the response back to the channel
-    slack_client.chat_postMessage(channel=channel, text=response.capitalize())
+    slack_client.chat_postMessage(channel=channel, text=response)
      
     return Response(), 200
 
 if __name__=="__main__":
     app.run(debug=True, port=8000)
 
-
-
-# todo: fix the issue with ngrok
